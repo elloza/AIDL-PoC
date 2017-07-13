@@ -10,12 +10,10 @@ This PoC will use 3 different applications:
 - MainApp: This app will interact with the other ones and it will allow the user to transform amounts of money from a selected currency to another one. This service will be exposed only for this application.
 
 [http://fixer.io/](http://fixer.io/)
-![Fixer](http://fixer.io/img/money.png)
 
 In addition the user will be able to get information about the introduced number thanks to another application which offers a service to get funnny quotes about numbers. That service is offerred for all apps in the system.
 
 [NumbersAPI](http://numbersapi.com/)
-![NumbersAPI](https://www.programmableweb.com/wp-content/numbersapiscreen.png)
 
 The application will show a textbox (numeric for the number), 2 Spinners (with currency codes), 2 textboxes for the results and 1 button to perform the requests.
 
