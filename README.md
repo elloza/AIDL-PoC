@@ -14,6 +14,9 @@ This PoC will use 3 different applications:
 
 In addition the user will be able to get information about the introduced number thanks to another application which offers a service to get funnny quotes about numbers. That service is offerred for all apps in the system.
 
+[NumbersAPI](http://numbersapi.com/)
+![https://www.programmableweb.com/wp-content/numbersapiscreen.png]
+
 The application will show a textbox (numeric for the number), 2 Spinners (with currency codes), 2 textboxes for the results and 1 button to perform the requests.
 
 - BankApp: this app will offer a private service with permissions only for MainApp and will provide currency info.
@@ -23,8 +26,6 @@ The application will show a textbox (numeric for the number), 2 Spinners (with c
 - TestApp: this app will test if it is possible get some info from BankApp throught their exposed Service.
 
 This example ilustrates the use of permissions in services offered as AIDL.
-
-![Screenshot](https://raw.githubusercontent.com/afollestad/aidl-example/master/art/screenshot1.png)
 
 ### Using this example
 
