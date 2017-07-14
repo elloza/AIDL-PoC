@@ -15,6 +15,9 @@ In addition the user will be able to get information about the introduced number
 
 [NumbersAPI](http://numbersapi.com/)
 
+![Diagram](https://github.com/elloza/AIDL-PoC/blob/master/images/AIDL.png)
+
+
 The application will show a textbox (numeric for the number), 2 Spinners (with currency codes), 2 textboxes for the results and 1 button to perform the requests.
 
 - BankApp: this app will offer a private service with permissions only for MainApp and will provide currency info.
