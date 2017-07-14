@@ -15,8 +15,9 @@ In addition the user will be able to get information about the introduced number
 
 [NumbersAPI](http://numbersapi.com/)
 
-![Diagram](https://github.com/elloza/AIDL-PoC/blob/master/images/AIDL.png)
-
+<p align="center">
+  <img src="https://github.com/elloza/AIDL-PoC/blob/master/images/AIDL.png">
+</p>
 
 The application will show a textbox (numeric for the number), 2 Spinners (with currency codes), 2 textboxes for the results and 1 button to perform the requests.
 
