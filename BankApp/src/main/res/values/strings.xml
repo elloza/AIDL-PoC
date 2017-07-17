@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BankApp</string>
+    <string name="permission_desc">Bank Request Data Permission</string>
+    <string name="permission_label">Bank Request Permission</string>
+</resources>
