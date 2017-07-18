@@ -37,4 +37,5 @@ dependencies {
 
     //Support
     compile "com.android.support:appcompat-v7:${rootProject.support_library_version}"
+
 }

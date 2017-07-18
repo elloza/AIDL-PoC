@@ -41,4 +41,24 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.3.1'
+
+    //DAGGER 2
+    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.dagger_version}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${rootProject.dagger_version}"
+    compile "com.google.dagger:dagger:${rootProject.dagger_version}"
+    compile "com.google.dagger:dagger-android-support:${rootProject.dagger_version}"
+
+
+    // Retrofitdagger_version
+    compile "com.squareup.retrofit2:retrofit:${rootProject.retrofit_version}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.retrofit_version}"
+    compile "com.squareup.retrofit2:converter-gson:${rootProject.retrofit_version}"
+
+    // RxJava
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.2.3'
+
+    compile "com.jakewharton.timber:timber:${rootProject.timber}"
+
+
 }

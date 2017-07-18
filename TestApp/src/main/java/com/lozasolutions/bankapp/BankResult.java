@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @author Aidan Follestad (lozasolutions)
+ * @author Álvaro Lozano (lozasolutions)
  */
 public class BankResult implements Parcelable {
 

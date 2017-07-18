@@ -2,8 +2,7 @@ package com.lozasolutions.bankapp;
 import com.lozasolutions.bankapp.BankResult;
 
 interface IBankService {
-    BankResult[] listFiles(String path);
+    BankResult obtainCurrencyRates(String from, String to);
 
     void exit();
 }
-

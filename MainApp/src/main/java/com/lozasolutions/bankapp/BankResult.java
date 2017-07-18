@@ -4,22 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @author Aidan Follestad (lozasolutions)
+ * @author Álvaro Lozano (lozasolutions)
  */
 public class BankResult implements Parcelable {
 
-    private String mPath;
+    private String jsonResponse;
 
     public BankResult(Parcel source) {
-        mPath = source.readString();
+        jsonResponse = source.readString();
     }
 
-    public BankResult(String path) {
-        mPath = path;
+    public BankResult(String jsonResponse) {
+        jsonResponse = jsonResponse;
     }
 
-    public String getPath() {
-        return mPath;
+    public String getJsonResponse() {
+        return jsonResponse;
     }
 
     @Override
@@ -29,10 +29,10 @@ public class BankResult implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mPath);
+        dest.writeString(jsonResponse);
     }
 
-    public static final Parcelable.Creator<BankResult> CREATOR = new Parcelable.Creator<BankResult>() {
+    public static final Creator<BankResult> CREATOR = new Creator<BankResult>() {
         @Override
         public BankResult[] newArray(int size) {
             return new BankResult[size];

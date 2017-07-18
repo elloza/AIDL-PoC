@@ -1,3 +1,9 @@
 <resources>
+
     <string name="app_name">MainApp</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_action_ok">OK</string>
+    <string name="error_loading_quote">An error happened loading quote</string>
+    <string name="error_loading_bank_info">An error happened loading bank info</string>
+
 </resources>

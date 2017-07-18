@@ -1,21 +1,35 @@
 package com.lozasolutions.bankapp;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lozasolutions.application.BankApplication;
+import com.lozasolutions.data.DataRespositoryNetwork;
+
+import javax.inject.Inject;
+
+import rx.schedulers.Schedulers;
 
 /**
- * @author Aidan Follestad (lozasolutions)
+ * @author Álvaro Lozano (lozasolutions)
  */
 public class BankService extends Service {
 
+    @Inject
+    DataRespositoryNetwork bankRespository;
+
     private void log(String message) {
-        Log.v("BankService", message);
+        Log.v("BankRemoteService", message);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        BankApplication.get(this).getComponent().inject(this);
     }
 
     @Override
@@ -32,27 +46,20 @@ public class BankService extends Service {
 
     private final IBankService.Stub mBinder = new IBankService.Stub() {
         @Override
-        public BankResult[] listFiles(String path) throws RemoteException {
-
+        public BankResult obtainCurrencyRates(String from, String to) throws RemoteException {
             /*
             Permissions
-
              */
-            /*
             Context mCtx = getApplicationContext();
-            String perm = "com.lozasolutions.mainapp";
-            String errMsg = "fails";
+            String perm = "com.lozasolutions.bankapp.requestdata";
+            String errMsg = "You need request data permission";
             mCtx.enforceCallingOrSelfPermission(perm, errMsg);
 
-            */
-
-
-            log("Received list command for: " + path);
-            List<BankResult> toSend = new ArrayList<>();
-            // Generates a list of 1000 objects that aren't sent back to the binding Activity
-            for (int i = 0; i < 1000; i++)
-                toSend.add(new BankResult("/example/item" + (i + 1)));
-            return toSend.toArray(new BankResult[toSend.size()]);
+            try {
+                return bankRespository.getBankResultRate(from, to).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).toBlocking().firstOrDefault(null);
+            }catch (Exception e){
+                throw new RemoteException(e.getMessage());
+            }
         }
 
         @Override

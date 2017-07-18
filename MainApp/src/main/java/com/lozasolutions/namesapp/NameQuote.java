@@ -4,22 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @author Aidan Follestad (lozasolutions)
+ * @author Álvaro Lozano (lozasolutions)
  */
 public class NameQuote implements Parcelable {
 
-    private String mPath;
+    private String quote;
 
     public NameQuote(Parcel source) {
-        mPath = source.readString();
+        quote = source.readString();
     }
 
-    public NameQuote(String path) {
-        mPath = path;
+    public NameQuote(String quote) {
+        quote = quote;
     }
 
-    public String getPath() {
-        return mPath;
+    public String getQuote() {
+        return quote;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class NameQuote implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mPath);
+        dest.writeString(quote);
     }
 
     public static final Creator<NameQuote> CREATOR = new Creator<NameQuote>() {
