@@ -10,8 +10,8 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.lozasolutions.mainapp.data.remote.BankAIDL;
 import com.lozasolutions.mainapp.data.remote.BankRepository;
-import com.lozasolutions.mainapp.data.remote.NamesAIDL;
-import com.lozasolutions.mainapp.data.remote.NamesRepository;
+import com.lozasolutions.mainapp.data.remote.PrintAIDL;
+import com.lozasolutions.mainapp.data.remote.PrintRepository;
 import com.lozasolutions.mainapp.injection.ApplicationContext;
 
 import javax.inject.Singleton;
@@ -49,8 +49,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    NamesRepository provideNamesRepository(@ApplicationContext Context context) {
-        return new NamesAIDL(context);
+    PrintRepository provideNamesRepository(@ApplicationContext Context context) {
+        return new PrintAIDL(context);
     }
 
     @Provides

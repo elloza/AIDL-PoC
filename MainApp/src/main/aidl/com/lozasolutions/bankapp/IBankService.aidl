@@ -1,8 +1,11 @@
 package com.lozasolutions.bankapp;
-import com.lozasolutions.bankapp.BankResult;
+import com.lozasolutions.bankapp.IBankService;
+import com.lozasolutions.bankapp.BankInfo;
+import com.lozasolutions.bankapp.IBankResultListener;
+
 
 interface IBankService {
-    BankResult obtainCurrencyRates(String from, String to);
 
+    void obtainCurrencyRates(in BankInfo bankinfo, IBankResultListener resultListener);
     void exit();
 }

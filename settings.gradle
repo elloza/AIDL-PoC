@@ -1,1 +1,1 @@
-include ':MainApp', ':BankApp', 'NamesApp', 'TestApp'
+include ':MainApp', ':BankApp', 'PrinterApp', 'TestApp'

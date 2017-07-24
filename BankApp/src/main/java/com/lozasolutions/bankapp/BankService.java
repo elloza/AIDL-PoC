@@ -46,7 +46,7 @@ public class BankService extends Service {
 
     private final IBankService.Stub mBinder = new IBankService.Stub() {
         @Override
-        public BankResult obtainCurrencyRates(String from, String to) throws RemoteException {
+        public void obtainCurrencyRates(BankInfo bankInfo, IBankResultListener resultListerner) throws RemoteException {
             /*
             Permissions
              */
@@ -56,7 +56,9 @@ public class BankService extends Service {
             mCtx.enforceCallingOrSelfPermission(perm, errMsg);
 
             try {
-                return bankRespository.getBankResultRate(from, to).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).toBlocking().firstOrDefault(null);
+                bankRespository.getBankResultRate("", "").subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).toBlocking().firstOrDefault(null);
+
+
             }catch (Exception e){
                 throw new RemoteException(e.getMessage());
             }

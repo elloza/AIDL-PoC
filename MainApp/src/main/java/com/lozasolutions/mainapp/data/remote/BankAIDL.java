@@ -7,9 +7,12 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import com.lozasolutions.bankapp.BankInfo;
 import com.lozasolutions.bankapp.BankResult;
+import com.lozasolutions.bankapp.IBankResultListener;
 import com.lozasolutions.bankapp.IBankService;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import rx.Emitter;
@@ -46,28 +49,34 @@ public class BankAIDL implements BankRepository {
                 ServiceConnection bankConnectionService = new ServiceConnection() {
 
                     IBankService bankService;
+                    IBankResultListener listener = new IBankResultListener() {
+                        @Override
+                        public void sendResult(BankResult result) throws RemoteException {
+                            emitter.onNext(result);
+                        }
+
+                        @Override
+                        public IBinder asBinder() {
+                            return null;
+                        }
+                    };
 
                     @Override
                     public void onServiceConnected(ComponentName className, IBinder service) {
 
                         bankService = IBankService.Stub.asInterface(service);
                         try {
-                            emitter.onNext(bankService.obtainCurrencyRates(from,to));
+                            bankService.obtainCurrencyRates(new BankInfo(""),listener);
                         } catch (RemoteException e) {
                             e.printStackTrace();
                             emitter.onError(e);
                         }
 
-                        try {
-                            bankService.exit();
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                            emitter.onError(e);
-                        }
                     }
 
                     @Override
                     public void onServiceDisconnected(ComponentName className) {
+                        emitter.onError(new Exception("Disconnected"));
                         bankService = null;
                     }
                 };

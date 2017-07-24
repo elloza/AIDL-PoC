@@ -7,8 +7,10 @@ import com.lozasolutions.bankapp.BankResult;
 import com.lozasolutions.mainapp.base.BasePresenter;
 import com.lozasolutions.mainapp.data.model.BankResultResponse;
 import com.lozasolutions.mainapp.data.remote.BankRepository;
-import com.lozasolutions.mainapp.data.remote.NamesRepository;
+import com.lozasolutions.mainapp.data.remote.PrintRepository;
 import com.lozasolutions.mainapp.injection.scopes.ConfigPersistent;
+import com.lozasolutions.printerapp.BillInfo;
+import com.lozasolutions.printerapp.PrintResult;
 
 import javax.inject.Inject;
 
@@ -23,16 +25,16 @@ import rx.subscriptions.CompositeSubscription;
 public class MainPresenter extends BasePresenter<MainMvpView> {
 
     private final BankRepository bankRepository;
-    private final NamesRepository namesRepository;
+    private final PrintRepository printRepository;
     private Gson gson;
 
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     //TODO change this to interactors
     @Inject
-    public MainPresenter(BankRepository bankRepository, NamesRepository namesRepository, Gson gson) {
+    public MainPresenter(BankRepository bankRepository, PrintRepository namesRepository, Gson gson) {
         this.bankRepository = bankRepository;
-        this.namesRepository = namesRepository;
+        this.printRepository = namesRepository;
         this.gson = gson;
     }
 
@@ -48,15 +50,17 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     }
 
 
-    public Observable<Pair<BankResult,String>> getInfo(){
+    public Observable<Pair<BankResult,PrintResult>> getInfo(){
 
-        return namesRepository.getQuote(10).flatMap(new Func1<String, Observable<Pair<BankResult,String>>>() {
+        return bankRepository.getBankLatestRates("USD","EUR").flatMap(new Func1<BankResult, Observable<Pair<BankResult,PrintResult>>>() {
             @Override
-            public Observable<Pair<BankResult,String>> call(final String s) {
-                return bankRepository.getBankLatestRates("USD","EUR").flatMap(new Func1<BankResult, Observable<Pair<BankResult,String>>>() {
+            public Observable<Pair<BankResult,PrintResult>> call(final BankResult bankResult) {
+
+                return printRepository.print(new BillInfo("print")).flatMap(new Func1<PrintResult, Observable<Pair<BankResult,PrintResult>>>() {
                     @Override
-                    public Observable<Pair<BankResult,String>> call(final BankResult bankResult) {
-                        Pair<BankResult,String> pair = new Pair(bankResult,s);
+                    public Observable<Pair<BankResult,PrintResult>> call(PrintResult printResult) {
+
+                        Pair<BankResult,PrintResult> pair = new Pair(bankResult,printResult);
                         return Observable.just(pair);
                     }
                 });
@@ -67,9 +71,9 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
     public void check() {
 
-        mSubscriptions.add(getInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Pair<BankResult, String>>() {
+        mSubscriptions.add(getInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Pair<BankResult, PrintResult>>() {
             @Override
-            public void call(Pair<BankResult, String> bankResultStringPair) {
+            public void call(Pair<BankResult, PrintResult> bankResultStringPair) {
 
                 if(isViewAttached()){
 
@@ -78,7 +82,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                     Float result = bankRes.getRates().get("USD") * 10;
 
                     getMvpView().showResultConversion(result);
-                    getMvpView().showQuote(bankResultStringPair.second);
+                    getMvpView().showQuote(bankResultStringPair.second.getQuote());
                 }
 
             }

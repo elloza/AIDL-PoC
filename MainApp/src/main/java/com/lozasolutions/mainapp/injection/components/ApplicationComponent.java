@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.lozasolutions.mainapp.data.remote.BankRepository;
-import com.lozasolutions.mainapp.data.remote.NamesRepository;
+import com.lozasolutions.mainapp.data.remote.PrintRepository;
 import com.lozasolutions.mainapp.injection.ApplicationContext;
 import com.lozasolutions.mainapp.injection.modules.ApplicationModule;
 
@@ -28,7 +28,7 @@ public interface ApplicationComponent {
 
     BankRepository bankRepository();
 
-    NamesRepository namesRepository();
+    PrintRepository namesRepository();
 
     Gson gson();
 
